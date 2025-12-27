@@ -1,12 +1,93 @@
 package org.example;
 // 25/12/2025 --> kadane's algorithm, prefixSum;
 // 26/12/2025 --> sliding window, 2 pointer, two sum, three sum.
+// 27/12/2025 --> missing number approach, just one mistake, prefix String
 // TODO --> prefixsum + map
 import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+        Main obj = new Main();
+    }
 
+    public void longestConsecutive() {
+        int [] arr = {2, 6, 1, 9, 4, 5, 3}; // --> 1,2,3,4,5,6,9
+        SortedSet<Integer> sortedSet = new TreeSet<>();
+        for(int i : arr) {
+            sortedSet.add(i);
+        }
+        int longest = 0;
+        int current = 0;
+        Integer prev = null;
+
+        for (Integer num : sortedSet) {
+            if (prev != null && num == prev + 1) {
+                current++;
+            } else {
+                current = 1;
+            }
+            longest = Math.max(longest, current);
+            prev = num;
+        }
+        System.out.println(longest);
+    }
+//   find just one mismatch.
+    private void mismatch() {
+        String [] arr = {"bana", "apple", "banaba", "bananza"};
+        String str = "banana";
+        for(String s : arr) {
+            if(s.length() == str.length()) {
+                int count = 0;
+                String str1 = "";
+                for(int i = 0; i < s.length(); i++) {
+                    if(s.charAt(i) != str.charAt(i)) {
+                        str1 += s.charAt(i);
+                        count++;
+                    }
+                }
+                if(count == 1) {
+                    System.out.println(true);
+                    System.out.println(str1);
+                    break;
+                }
+            } else {
+                System.out.println(false);
+            }
+
+        }
+    }
+
+//    find missing number with XOR.
+    private void missingNumber() {
+        int [] arr = {1,0,3,4,5,2};
+        int n = 6;
+        int a = 0; // 0000
+        for(int i = 0; i <= n; i++) {
+            a = a ^ i; // 0 ^ 1 ^ 2 ^ 3 ^ 4 ^ 5 ^ 6 --> 0000 ^ 0001 ^ 0010 ^ 0011 ^ 0100 ^ 0101 ^ 0110
+        }
+        System.out.println(a); //  0111
+        for(int i : arr) {
+            a = a ^ i; // 0111 ^ 0001 --> 0110
+        }
+        System.out.println(a);
+    }
+
+    public void lexicographicallyDescending_Order() {
+        String a = "for";
+        int [] ch = new int[26];
+        for(int i = 0; i < a.length(); i++) {
+            ch[a.charAt(i) - 'a']++;
+        }
+        String s = "";
+        for(int i = ch.length-1 ; i >= 0; i--) {
+            if(ch[i] != 0) {
+                while(ch[i] > 0) {
+                    s += (char) (i + 'a');
+                    ch[i]--;
+                }
+            }
+        }
+        System.out.println(s);
     }
 
     //    sliding window works with unsorted array and positive numbers
@@ -87,15 +168,16 @@ public class Main {
         }
     }
 
-    //    incomplete.
+    //   Find Prefix String
     private static void prefixString() {
         String s = "shiva shivam shikha";
-//        output : shi;
-        String str = s.replaceAll(" ", "");
-        int [] ch = new int[26];
-        for(int i = 0; i < str.length(); i++) {
-            ch[str.charAt(i) - 'a']++;
+        String [] str = s.split(" ");
+        String prefix = str[0];
+        for(int i = 1; i < str.length; i++) {
+            while(!str[i].startsWith(prefix)) {
+                prefix = prefix.substring(0, prefix.length() - 1);
+            }
         }
-        System.out.println(Arrays.toString(ch));
+        System.out.println(prefix); //  output : shi;
     }
 }

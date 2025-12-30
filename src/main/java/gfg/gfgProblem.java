@@ -1,13 +1,12 @@
 package gfg;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class gfgProblem {
     public static void main(String[] args) {
         gfgProblem obj = new gfgProblem();
-        obj.sortInWave();
+        obj.filterByDigits();
     }
 //    https://www.geeksforgeeks.org/problems/multiply-two-strings/1?page=2&category=Arrays,Strings&status=unsolved&sortBy=submissions
     private void productString() {
@@ -68,6 +67,45 @@ public class gfgProblem {
             arr[i+1] = temp;
         }
         System.out.println(Arrays.toString(arr));
+    }
+//    https://www.geeksforgeeks.org/problems/intersection-of-two-arrays2404/1?page=2&category=Arrays&status=unsolved&sortBy=submissions
+    public static int intersectSize() {
+        int a[] = {1, 2, 4, 3, 5, 6}, b[] = {3, 4, 5, 6, 7};
+        Map<Integer, Integer> m = new HashMap<>();
+        for(int i : a) {
+            m.put(i , m.getOrDefault(i, 0) + 1);
+        }
+        int count = 0;
+        for(int i : b) {
+            if (m.containsKey(i) && m.get(i) > 0) {
+                count++;
+            }
+        }
+        return count;
+    }
+// https://www.geeksforgeeks.org/problems/numbers-containing-1-2-and-32555/1?page=2&category=Arrays&status=unsolved&sortBy=submissions
+    public void filterByDigits() {
+        ArrayList<Integer> arr = new ArrayList<>(List.of(1,2,3,12));
+        ArrayList<Integer> result = new ArrayList<>();
+        for (int num : arr) {
+            int temp = num;
+            boolean valid = true;
+            while (temp > 0) {
+                int digit = temp % 10;
+                if (digit != 1 && digit != 2 && digit != 3) {
+                    valid = false;
+                    break;
+                }
+                temp /= 10;
+            }
+            if (valid) {
+                result.add(num);
+            }
+        }
+        if (result.isEmpty()) {
+            result.add(-1);
+        }
+        System.out.println(result);
     }
 //    https://www.geeksforgeeks.org/problems/-rearrange-array-alternately-1587115620/1?page=1&category=Arrays,Strings&status=unsolved&sortBy=submissions
 }

@@ -14,7 +14,7 @@ public class sorting {
 
     public static void main(String[] args) {
 
-        int[] data = {50, 30, 10, 40, 20};
+        int[] data = {4, 1, 3, 9, 7};
 
         bubbleSort(data.clone());
         selectionSort(data.clone());
